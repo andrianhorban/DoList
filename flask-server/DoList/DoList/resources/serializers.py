@@ -1,11 +1,10 @@
 """serializer"""
-from marshmallow import fields
+from flask_restful import fields
 
-
-class DoList:
-    """serializer class"""
-    id = fields.Integer(readOnly=True, description='The unique identifier of item')
-    title = fields.String(required=True)
-    text = fields.String(description='Items text')
-    slug = fields.String(required=True)
-    is_completed = fields.Boolean(required=True)
+ItemListSchema = {
+    'id': fields.Integer,
+    'title': fields.String,
+    'text': fields.String,
+    'slug': fields.String,
+    'is_completed': fields.Boolean
+}

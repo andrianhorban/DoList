@@ -1,25 +1,25 @@
 """App api"""
-from flask_apispec import marshal_with, MethodResource
-
-from .serializers import DoList
-from ..models import Item as i
+from flask_restful import Resource, marshal_with
 from DoList import db
+from .serializers import ItemListSchema
+from ..models import Item
 
 
-class ItemsList(MethodResource):
-    @marshal_with(DoList)
+class ItemsResource(Resource):
+    @marshal_with(ItemListSchema)
     def get(self):
         """get"""
         try:
-            return i.query.all()
+            items = Item.query.all()[0]
+            return items
         except Exception:
             return {'message': "Getting exception."}, 500
 
-    @marshal_with(DoList)
+    #@marshal_with(ItemListSchema)
     def delete(self, item_id: int):
         """del"""
         try:
-            item = i.query.filter(i.id == item_id).one()
+            item = Item.query.filter(Item.id == item_id).one()
             item.delete()
             return {'message': "Item deleted."}, 204
         except Exception:

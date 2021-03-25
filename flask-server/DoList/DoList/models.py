@@ -17,6 +17,14 @@ class Item(db.Model):
             raise AssertionError('Item with this title already exist')
         return value
 
+    def get_item(self):
+        return {
+            'title': self.title,
+            'text': self.text,
+            'slug': self.slug,
+            'is_completed': self.is_completed
+        }
+
     def __repr__(self):
         return f"{Item.title, Item.text, Item.is_completed}"
 

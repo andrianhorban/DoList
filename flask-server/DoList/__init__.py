@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_migrate import Migrate
+from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from .DoList.views import blueprint_DoList
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -16,9 +18,14 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app, db)
     blueprint_registration(app)
+    api = Api(app)
+    from .DoList.resources.api import ItemsResource
+    api.add_resource(ItemsResource, '/dolist')
     return app
 
 
 def blueprint_registration(app):
     """Register Flask blueprints"""
     app.register_blueprint(blueprint_DoList, url_prefix='/')
+
+
