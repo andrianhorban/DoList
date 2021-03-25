@@ -20,4 +20,4 @@ class ItemsList(MethodResource):
             item.delete()
             return {'message': "Item deleted."}, 204
         except Exception:
-            return {'message': "Getting exception."}, 500
+            return {'message': "Deleting exception."}, 500
