@@ -10,8 +10,8 @@ class ItemsResource(Resource):
     def get(self):
         """get"""
         try:
-            items = Item.query.all()[0]
-            return items
+
+            return Item.query.all()
         except Exception:
             return {'message': "Getting exception."}, 500
 

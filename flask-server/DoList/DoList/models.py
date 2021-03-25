@@ -1,3 +1,4 @@
+"""model for bd"""
 from slugify import slugify
 from sqlalchemy import event
 from DoList import db

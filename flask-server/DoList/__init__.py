@@ -1,3 +1,4 @@
+"""main app init"""
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
@@ -19,13 +20,18 @@ def create_app(config_name):
     migrate.init_app(app, db)
     blueprint_registration(app)
     api = Api(app)
-    from .DoList.resources.api import ItemsResource
-    api.add_resource(ItemsResource, '/dolist')
+    resource_adding(api)
     return app
 
 
 def blueprint_registration(app):
     """Register Flask blueprints"""
     app.register_blueprint(blueprint_DoList, url_prefix='/')
+
+
+def resource_adding(api):
+    """Resource adding"""
+    from .DoList.resources.api import ItemsResource
+    api.add_resource(ItemsResource, '/dolist')
 
 
