@@ -1,7 +1,9 @@
+"""serializer"""
 from marshmallow import fields
 
 
 class DoList:
+    """serializer class"""
     id = fields.Integer(readOnly=True, description='The unique identifier of item')
     title = fields.String(required=True)
     text = fields.String(description='Items text')
