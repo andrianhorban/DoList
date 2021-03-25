@@ -11,6 +11,15 @@ class Item(db.Model):
     slug = db.Column(db.String(128), unique=True, nullable=False)
     is_completed = db.Column(db.Boolean, default=False, nullable=False)
 
+    @validates('title')
+    def validate_title(self, value):
+        if Item.query.filter(Item.title == value).first():
+            raise AssertionError('Item with this title already exist')
+        return value
+
+    def __repr__(self):
+        return f"{Item.title, Item.text, Item.is_completed}"
+
     @staticmethod
     def slug_generator(target, value: str):
         target.slug = slugify(value)
