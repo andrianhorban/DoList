@@ -29,6 +29,12 @@ class Item(db.Model):
     def __repr__(self):
         return f"{Item.title, Item.text, Item.is_completed}"
 
+    def __init__(self,title, text, slug, is_completed):
+        self.title = title
+        self.text = text
+        self.slug = slug
+        self.is_completed = is_completed
+
     @staticmethod
     def slug_generator(target, value: str):
         target.slug = slugify(value)

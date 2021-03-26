@@ -32,6 +32,6 @@ def blueprint_registration(app):
 def resource_adding(api):
     """Resource adding"""
     from .DoList.resources.api import ItemsResource
-    api.add_resource(ItemsResource, '/dolist')
+    api.add_resource(ItemsResource, '/api/dolist')
 
 

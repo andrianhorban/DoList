@@ -16,7 +16,9 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     """Testing configuration."""
-    pass
+    DEBUG = True
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TESTING_DATABASE_URI')
 
 
 config = {'development': DevelopmentConfig,
