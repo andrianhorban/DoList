@@ -27,6 +27,7 @@ class Item(db.Model):
 
     def get_item(self):
         return {
+            'id' : self.id,
             'title': self.title,
             'text': self.text,
             'slug': self.slug,
@@ -41,7 +42,4 @@ class Item(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @staticmethod
-    def slug_generator(target, value: str):
-        target.slug = slugify(value)
 

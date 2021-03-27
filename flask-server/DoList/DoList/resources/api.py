@@ -15,45 +15,63 @@ class ItemsResource(Resource):
         except Exception:
             return {'message': "Getting exception."}, 500
 
-    @marshal_with(ItemListSchema)
-    def delete(self, item_id: int):
+    def delete(self):
         """del"""
         try:
-            item = Item.query.filter(Item.id == item_id).one()
-            item.delete()
+            parser = reqparse.RequestParser()
+            parser.add_argument('item_id')
+            parser = parser.parse_args()
+            item_id = parser['item_id']
+            item = Item.query.filter(Item.id == item_id).first()
+
+            db.session.delete(item)
+            db.session.commit()
             return {'message': "Item deleted."}, 204
         except Exception:
             return {'message': "Deleting exception."}, 500
 
-    # @marshal_with(ItemListSchema)
+    @marshal_with(ItemListSchema)
     def post(self, *args):
         """post"""
-        parser = reqparse.RequestParser()
-        parser.add_argument('title')
-        parser.add_argument('text')
-        parser.add_argument('is_completed')
-        parser = parser.parse_args()
-        title = parser['title']
-        text = parser['text']
-        is_completed = bool(parser['is_completed'])
-        response = {
-            'title': title,
-            'text': text,
-            'is_completed': is_completed
-        }
-        return jsonify(response)
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('title')
+            parser.add_argument('text')
+            parser.add_argument('slug')
+            parser.add_argument('is_completed')
+            parser = parser.parse_args()
+            title = parser['title']
+            text = parser['text']
+            slug = parser['slug']
+            is_completed = bool(parser['is_completed'])
+            item = Item(title, text, slug, is_completed)
 
-    @marshal_with(ItemListSchema)
-    def put(self, item_id):
+            db.session.add(item)
+            db.session.commit()
+            return {'message': "Posted"}, 201
+        except Exception:
+            return {'message': "Add exception."}, 500
+
+    # @marshal_with(ItemListSchema)
+    def put(self):
         """put"""
         try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('item_id')
+            parser.add_argument('title')
+            parser.add_argument('text')
+            parser.add_argument('slug')
+            parser.add_argument('is_completed')
+            parser = parser.parse_args()
+            item_id = parser['item_id']
             item = Item.query.filter(Item.id == int(item_id)).first()
-            item.title = request.form['title']
-            item.text = request.form['text']
-            item.slug = request.form['slug']
-            item.is_completed = request.form['is_completed']
+            item.title = parser['title']
+            item.text = parser['text']
+            item.slug = parser['slug']
+            item.is_completed = bool(parser['is_completed'])
+
             db.session.commit()
             db.session.close()
-            return Item.query.all()
+            return {'message': "Putted"}, 202
         except Exception:
             return {'message': "Put exception."}, 500
