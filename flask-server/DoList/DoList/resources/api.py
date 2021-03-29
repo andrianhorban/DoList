@@ -19,10 +19,10 @@ class ItemsResource(Resource):
         """del"""
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('item_id')
+            parser.add_argument('item_title')
             parser = parser.parse_args()
-            item_id = parser['item_id']
-            item = Item.query.filter(Item.id == item_id).first()
+            item_title = parser['item_title']
+            item = Item.query.filter(Item.title == item_title).first()
 
             db.session.delete(item)
             db.session.commit()
@@ -30,7 +30,7 @@ class ItemsResource(Resource):
         except Exception:
             return {'message': "Deleting exception."}, 500
 
-    @marshal_with(ItemListSchema)
+
     def post(self, *args):
         """post"""
         try:
@@ -44,10 +44,8 @@ class ItemsResource(Resource):
             text = parser['text']
             slug = parser['slug']
             is_completed = bool(parser['is_completed'])
-            item = Item(title, text, slug, is_completed)
-
-            db.session.add(item)
-            db.session.commit()
+            item = Item(title=title, text=text, slug=slug, is_completed=is_completed)
+            item.save_db()
             return {'message': "Posted"}, 201
         except Exception:
             return {'message': "Add exception."}, 500
@@ -57,14 +55,14 @@ class ItemsResource(Resource):
         """put"""
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('item_id')
+            parser.add_argument('item_title')
             parser.add_argument('title')
             parser.add_argument('text')
             parser.add_argument('slug')
             parser.add_argument('is_completed')
             parser = parser.parse_args()
-            item_id = parser['item_id']
-            item = Item.query.filter(Item.id == int(item_id)).first()
+            item_title = parser['item_title']
+            item = Item.query.filter(Item.title == item_title).first()
             item.title = parser['title']
             item.text = parser['text']
             item.slug = parser['slug']

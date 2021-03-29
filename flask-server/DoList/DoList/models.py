@@ -12,12 +12,12 @@ class Item(db.Model):
     slug = db.Column(db.String(128), unique=True, nullable=False)
     is_completed = db.Column(db.Boolean, default=False, nullable=False)
 
-    def __init__(self,title: str, text: str, slug: str, is_completed: bool):
-        self.text = text
-        self.title = title
-        self.slug = slug
-        self.is_completed = is_completed
-        print("Item created")
+    # def __init__(self,title: str, text: str, slug: str, is_completed: bool):
+    #     self.text = text
+    #     self.title = title
+    #     self.slug = slug
+    #     self.is_completed = is_completed
+    #     print("Item created")
 
     @validates('title')
     def validate_title(self, key, value):
