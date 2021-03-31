@@ -1,7 +1,7 @@
 """serializer"""
 from flask_restful import fields
 
-ItemListSchema = {
+ItemList = {
     'id': fields.Integer,
     'title': fields.String,
     'text': fields.String,

@@ -1,13 +1,16 @@
 """App api"""
-from flask_restful import Resource, marshal_with, reqparse
+from flask_restful import Resource, reqparse
 from DoList import db
-from .serializers import ItemListSchema
+from .schemas import ItemResponseSchema, ItemBaseSchema
+from .serializers import ItemList
 from ..models import Item
 from flask import request, jsonify
+from flask_apispec import doc, MethodResource, marshal_with
 
 
-class ItemsResource(Resource):
-    @marshal_with(ItemListSchema)
+class ItemsResource(MethodResource, Resource):
+    @doc(description="Item`s list to do.", tags=['DoList'])
+    @marshal_with(ItemBaseSchema(many=True))
     def get(self):
         """get"""
         try:
@@ -15,8 +18,27 @@ class ItemsResource(Resource):
         except Exception:
             return {'message': "Getting exception."}, 500
 
+
     def delete(self):
-        """del"""
+        """del
+        ---
+            paths:
+      /api/dolist/{userId}:
+        get:
+          summary: Returns a user by ID.
+          parameters:
+            - name: userId
+              in: path
+              required: true
+              description: Parameter description in CommonMark or HTML.
+              schema:
+                type : integer
+                format: int64
+                minimum: 1
+          responses:
+            '200':
+              description: OK
+        """
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('item_title')
@@ -30,7 +52,7 @@ class ItemsResource(Resource):
         except Exception:
             return {'message': "Deleting exception."}, 500
 
-
+    @doc(description="Creating item to do.", tags=['DoList'])
     def post(self, *args):
         """post"""
         try:
@@ -51,6 +73,8 @@ class ItemsResource(Resource):
             return {'message': "Add exception."}, 500
 
     # @marshal_with(ItemListSchema)
+    @doc(description="Editing item to do.", tags=['DoList'])
+    @marshal_with(ItemBaseSchema(many=True))
     def put(self):
         """put"""
         try:

@@ -8,7 +8,7 @@ from apispec.ext.marshmallow import MarshmallowPlugin
 class BaseConfig:
     """Base configuration."""
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    #swagger registration
+    # swagger registration
     APISPEC_SPEC = APISpec(
         title='DoList',
         version='v1',
