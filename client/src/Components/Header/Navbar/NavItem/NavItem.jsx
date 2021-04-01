@@ -1,14 +1,16 @@
 import React from "react";
 import s from './style.module.css';
+import {NavLink} from "react-router-dom";
 
 
-const NavItem = () => {
+const NavItem = ({path, text}) => {
     return (
-        <div>
-            <NavItem path="/" text='Головна' />
+        <NavLink
+            exact
+            to={path}>
+            {text}
 
-            <NavItem path="/about" text='Про нас' />
-        </div>
+        </NavLink>
     );
 };
 

@@ -3,7 +3,7 @@ import s from './style.module.css';
 
 const Index = () => {
     return (
-       <div>
+       <div className={s.body}>
 
        </div>
     );
