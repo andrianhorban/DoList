@@ -8,7 +8,9 @@ const NavItem = ({path, text}) => {
         <NavLink
             exact
             className={`${s.navitem__block} ${s.navitem__elem}`}
+            activeClassName={s.navitem__elem_active}
             to={path}>
+
             {text}
 
         </NavLink>
