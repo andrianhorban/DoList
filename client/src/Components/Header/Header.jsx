@@ -5,7 +5,12 @@ import Navbar from  './Navbar/Navbar'
 const Header = () => {
     return (
        <div className={s.header}>
-            <Navbar />
+            <div className={`${s.header__block} ${s.header__title}`}>
+                DoList
+            </div>
+           <Navbar />
+
+
        </div>
     );
 };

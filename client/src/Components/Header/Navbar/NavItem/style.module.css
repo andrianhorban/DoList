@@ -1,0 +1,22 @@
+.navitem__block{
+    display: inline-block;
+    position: relative;
+
+}
+.navitem__elem{
+    text-decoration: none;
+    background-color: coral;
+    text-align: left;
+    margin: 5px 5px 5px 10px;
+    padding: 5px 15px 5px 15px;
+    font-size: x-large;
+    font-family: "Gill Sans", sans-serif;
+    color: white;
+
+
+}
+
+.navitem__elem_active{
+    text-transform: uppercase;
+    color: darkgoldenrod;
+}

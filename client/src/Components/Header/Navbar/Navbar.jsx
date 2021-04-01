@@ -4,10 +4,11 @@ import NavItem from './NavItem/NavItem'
 
 const Navbar = () => {
     return (
-        <div>
-            <NavItem path="/" text='Головна' />
+        <div className={s.navbar}>
+            <NavItem path="/" text='Список справ' />
 
-            <NavItem path="/about" text='Про нас' />
+            <NavItem path="/about" text='Про застосунок' />
+
         </div>
     );
 };
